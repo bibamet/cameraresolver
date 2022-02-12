@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=cameraevents"
-    username: postgres
-    password: 123
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:postgres}?currentSchema=${DATABASE_SCHEMA:cameraevents}"
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:123}
   jpa:
     show-sql: true
     hibernate:
