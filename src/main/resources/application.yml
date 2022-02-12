@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=cameraevents"
+    username: postgres
+    password: 123
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+kafka:
+  bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
+  consumer:
+    group-id: ${GROUP_ID:test-consumer-group}
+  topic-name: ${TOPIC_NAME:SpeedControl}
+server:
+  port: 42099
+internal:
+  camera:
+    speed-limit: ${SPEED_LIMIT:80}
