@@ -8,6 +8,8 @@ import com.example.cameraresolver.mapper.CameraMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CameraResolverService {
@@ -29,4 +31,10 @@ public class CameraResolverService {
     public void setSpeedLimit(long speed) {
         speedLimit.setSpeedLimit(speed);
     }
+
+    public List<CameraDto> getLastEvents(Long val) {
+        val = val == null ? 10 : val;
+        return cameraMapper.toCameraDtoList(cameraRepo.getLastEvents(val));
+    }
+
 }

@@ -39,5 +39,4 @@ public class CameraEntity {
     private long currentLimit;
     private boolean guilty;
 
-
 }

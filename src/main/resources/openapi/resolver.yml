@@ -1,0 +1,101 @@
+openapi: 3.0.2
+info:
+  title: "Камера контроля скорости"
+  description: "REST-сервис в основном предназначен для просмотра сведений о зарегистрированных событиях камерой контроля скорости, а так же для изменения текущего значения допустимой предельной скорости. Так же сервис позволяет узнать текущее значение предельно допустимой скорости."
+  version: 1.0.0
+  contact:
+    name: "Pavel Kalinchuk"
+    email: "spr1tee1337@gmail.com"
+servers:
+  - url: http://localhost:42099/
+    description: test-server
+paths:
+  /camera:
+    post:
+      tags: 
+        - Camera
+      summary: "Установка предела скорости"
+      description: "Контракт подразумевает изменение значения предельно допустимой скорости"
+      parameters:
+        - name: val
+          description: "Новое значение предельно допустимой скорости"
+          in: query
+          required: true
+          allowEmptyValue: false
+          schema: 
+            type: integer
+      responses:
+        200:
+          description: "Successfull. The current speed limit is 80"
+        400:
+          description: "Bad request"
+  /camera/speed:
+    get:  
+      tags: 
+        - Camera
+      summary: "Получение текущего лимита скорости"
+      description: "Позволяет получить текущую предельно допустимую скорость, которая установлена в сервисе"
+      responses:
+        200:
+          description: "В ответе будет указана текущая предельно допустимая скорость. Например, \"80\""
+        400:
+          description: "Bad request"
+  /camera/events:
+    get:
+      tags: 
+        - Camera
+      summary: "Получение записанных событий"
+      description: "Контракт возвращает определенное количество записанных событий. Значение возвращаемых событий по умолчанию равно 10."
+      parameters:
+        - name: "val"
+          description: "Количество выводимых записей. Должно быть больше 0."
+          required: false
+          in: "query"
+          example: "5"
+          schema:
+            type: integer
+      responses:
+        200: 
+          description: "Успешное выполнение. Ответ - список событий."
+          content:
+            application/json:
+              schema:
+                title: Sample
+                type: array
+                items:
+                  type: object
+                  properties:
+                    address: 
+                      type: "string"
+                      description: "Адрес, по которому установлена камера"
+                      example: "Russia, Ryazan region, Ryazan, Moscow highway, 21A"
+                    speed:
+                      type: integer
+                      description: "Скорость зафиксированного события"
+                      example: "54"
+                    number:
+                      type: "string"
+                      description: "Гос. номер автомобиля из события"
+                      example: "А123АА62"
+                    timestamp: 
+                      type: integer
+                      description: "Временная метка зафиксированного события"
+                      example: "81000000"
+                    priorityClass:
+                      type: "string"
+                      description: "Класс автомобиля из зафиксированного события"
+                      enum: 
+                        - STANDARD
+                        - SPECIAL_SERVICES
+                      example: "STANDARD"
+                    currentLimit:
+                      type: integer
+                      description: "Текущее значение предельно допустимой скорости"
+                      example: "80"
+                    guilty: 
+                      type: boolean
+                      description: "Признак, указывающий на виновность водителя"
+                      example: false
+tags:
+  - name: Camera
+    description: "Описывает действия, совершаемые с камерой"

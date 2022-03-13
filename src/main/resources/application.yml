@@ -17,3 +17,9 @@ server:
 internal:
   camera:
     speed-limit: ${SPEED_LIMIT:80}
+
+application-description: camera-service
+application-version: 1.0.0
+#springdoc:
+#  api-docs:
+#    path: swagger
